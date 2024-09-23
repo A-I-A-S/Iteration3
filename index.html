@@ -1,0 +1,112 @@
+<!doctype html>
+
+<html lang=”en”>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Name of the web page -->
+    <title>Artificial Intelligence Associated Stocktaking AIAS</title> 
+    <!-- Link to the main style sheet-->
+    <link rel="stylesheet" href="home-style.css">
+</head>
+<body>    
+    <!-- Header -->
+    <div class="page-container"></div>
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="AssociatedStocktakingLogo1.png" alt="Associated Stocktaking Logo" class="logo">
+        </a>
+        <nav class="navbar">
+            
+                <a href="index.html">Home</a></li>
+                <a href="scan-item.html">Scan Item</a></li>
+                <a href="count-products.html">Count Products</a></li>
+                <a href="privacy-policy.html">Privacy Policy</a></li>
+                <a href="terms-of-use.html">Terms of Use</a></li>
+            
+        </nav>
+    </header>
+<!-- Popup terms of use  to use site where acceptance is required and non acceptance means u cant use it-->
+    <body onload="checkTermsAccepted()">
+      
+<!-- Main content of the AIAS webpage with the introduction and the features of the site-->
+      <div id="introduction">
+        <h1>Welcome!</h1>
+        <p>Welcome to AIAS, the Associated Inventory Automation System, an innovative solution designed to revolutionize the stocktaking process for Associated Stocktaking. Our platform leverages advanced machine learning technologies to offer a seamless and efficient way to manage inventory using mobile devices.</p>
+        
+        
+        <div class="feature">
+        <div class="left">
+            <h2>Scan Item</h2>
+            <p>This feature is designed to input products into the AIAS system initially. During this stage, users input product details and can use their mobile devices to capture or upload a video of the product.</p>
+            <div class="button-container">
+                <a href="scan-item.html"><button>Go to Scan Item Page</button></a>
+            </div>
+        </div>
+        
+        <div class="right">
+            <h2>Count Products</h2>
+            <p>This functionality allows users to quickly and accurately count the stock of each product by simply scanning them again. The system matches the scanned product with its database entry, providing instant recognition and updating the inventory count.</p>
+            <div class="button-container">
+                <a href="count-products.html"><button>Go to Count Products Page</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- creates the modal/panel that displays the terms that are required  to use site and are listed below-->
+   <!-- learnt some modal concepts from https://www.w3schools.com/howto/howto_css_modals.asp and some videos and tutorials and used them as basis to build from-->
+   <div id="terms-popup" class="popup-content">        
+    <div class="title">Terms of Use</div>
+    <div class="popup-text">
+        <ul>
+            <li>Welcome to Artificial Intelligences Associated Stocktaking (AIAS)!</li>
+            <li>Please review our Terms of Use carefully before continuing. By clicking “Accept,” you 
+              agree to be bound by these Terms and our Privacy Policy.</li>
+              <li>1. The Website, the Services and all of the related products of AIAS are subject to copyright. The 
+                  material on the Website is protected by copyright under the laws of Australia and through 
+                  international treaties. </li>
+            <li>2. We collect, use, and disclose personal information in accordance with the Australian Privacy Principles 
+              (APPs) under the Privacy Act 1988. Our practices regarding your personal information are outlined in 
+              our Privacy Policy. </li>
+            <li>3. You agree to not misuse our services by using our services only for lawful purposes and in accordance with these Terms of Use.</li>
+            <li>4. Use of the Website and the Services is at your own risk. Everything on the Website and the 
+              Services is provided to you "as is" and "as available" without warranty or condition of any kind.</li>
+            <li>5. AIAS reserves the right to review and change any of the Terms by updating these terms at our discretion.</li>
+            <li>For more details, please read our <a href="terms-of-use.html">Terms of Use</a>.</li>
+        </ul>
+    </div>
+    <div class="button-container">
+        <button id="accept-button">Accept</button> <!-- button to accept terms, allows for further site usage-->
+        <button id="decline-button">Decline</button> <!-- button to decline terms, prevents further site usage-->
+    </div>
+</div>
+<div id="terms-overlay" class="overlay"></div> <!-- creates an overlay that will be displayed when the terms are not accepted , can't use site-->
+</body>
+
+    <!-- Footer of the AIAS webpage-->
+    <footer class="footer">
+        <a href="#" class="footer-logo">
+            <img src="AssociatedStocktakingLogo2.png" alt="Associated Stocktaking Logo 2">
+        </a>
+        <nav class="footer-nav"> <!-- navigation bar for footer -->
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="scan-item.html">Scan Item</a></li>
+                <li><a href="count-products.html">Count Products</a></li>
+                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="terms-of-use.html">Terms of Use</a></li>  
+            </ul>
+        </nav>
+           <!-- copyright information for footer --> 
+        <p class="copyright">&copy; 2024 Associated Stocktaking Services. All Rights Reserved.</p>
+    </footer>
+    
+    <!-- Reference to the terms fo use JavaScript file -->
+    <script src="aiasTerms.js"></script>
+    
+
+</body>
+</html>

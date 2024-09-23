@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artificial Intelligence Associated Stocktaking AIAS</title>
+    <link rel="stylesheet" href="scan-style.css"> <!-- Link to the style sheet for this HTML page -->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.953.0.min.js"></script> <!-- Link to the AWS SDK for uploading files to AWS services from the browser -->
+    <script src="upload.js" defer></script> <!-- Link to the external JavaScript file -->
+</head>
+<body>
+    <div class="page-container">
+        <!-- Header containing logo and navigation bar -->
+        <header class="header">
+            <a href="index.html" class="logo">
+                <img src="AssociatedStocktakingLogo1.png" alt="Associated Stocktaking Logo" class="logo">
+            </a>
+            <nav class="navbar">
+                <a href="index.html">Home</a>
+                <a href="scan-item.html">Scan Item</a>
+                <a href="count-products.html">Count Products</a>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms-of-use.html">Terms of Use</a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <!-- scan-item introduction -->
+            <div id="introduction">
+                <h1>Scan Item</h1>
+                <p>This functionality allows users to quickly and accurately count the stock of each product by simply scanning them again. The system matches the scanned product with its database entry, providing instant recognition and updating the inventory count.</p>
+                <h2>Scan Item Instructions</h2>
+                <ul>
+                    <li><p>(i) Inputting Product Information:</p>
+                        To begin the scanning of a product, first proceed to click or tap onto the product name text field and enter the details of the product as shown by the placeholder text in the text area.
+                    </li>
+                    <li><p>(ii) Inputting video:</p>
+                        The video file can be added in a variety of ways for different devices and this is started by tapping or clicking on the upload area. <br><br> When recording the video of the product it is recommended to use a lazy susan or a device where your hands will not be in the way to spin the product to get a full 360 degree view of the product. If that is not possible using fingers at the top or out of the way to turn the product can work but may not be as effective for later identification.<br>
+                        <br>(a) Tapping on the field will bring up the camera option (if attached for computers) for mobile devices and the video can be recorded in real time and uploaded.<br>
+                        <br>(b) Clicking on the upload button will bring up the file explorer or gallery for devices and the video can be uploaded from there by selecting the file.<br>
+                        <br>(c) Drag and drop the video file onto the upload area.
+                    </li>
+                    <li><p>(iii) Submitting the form:</p>
+                        To submit the form, click or tap on the submit button and the product will be added to the storage, processed, and a confirmation message will be displayed.
+                    </li>
+                    <li><p>(iv) Resetting/Clearing the form:</p>
+                        To reset or clear the form, click or tap on the reset button and the input fields and results will be cleared.
+                    </li>
+                </ul>
+
+                <!-- scan-item form which includes the text input fields and upload area that is used for scanning of products and sending them to storage -->
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <div class="input-group">
+                        <label for="productName">Product Name</label>
+                        <textarea id="productName" style="resize: none;" rows="1" name="productName" placeholder="Ex. Jim Beam 700mL White Label" required></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label for="productDescription">Product Description</label>
+                        <textarea id="productDescription" style="resize: none;" rows="5" name="productDescription" placeholder="Ex. White Label Kentucky Straight Bourbon Whiskey 700mL" required></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label for="productCost">Product Cost</label>
+                        <textarea id="productCost" style="resize: none;" rows="1" name="productCost" placeholder="Ex. 41.55" required></textarea>
+                    </div>
+                    <!-- Upload area for uploading video files, inspired by a video tutorial and adapted for cloud uploading and video format: https://www.youtube.com/watch?v=5Fws9daTtIs -->
+                    <div class="upload">
+                        <div class="upload-container">
+                            <div class="upload-area">
+                                <label for="inputFile" id="drop-area">
+                                    <input type="file" accept="video/*" id="inputFile" hidden required>
+                                    <div id="image-view">
+                                        <img src="upload_icon.png" alt="Upload icon">
+                                        <p>Drag and drop or click here to upload a video</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" id="submitButton">Submit</button>
+                    <button type="reset" id="resetButton">Reset</button>
+
+                    <div class="loader" id="loader"></div>
+                    <div id="result"></div>
+                    </div>
+                    
+                </form>
+                
+            </div>
+            </div>
+        </main>
+
+        <!-- Script to clear the text areas when the page loads -->
+        <script>
+            window.onload = function() {
+                // Clear the value of the text areas when the page loads
+                document.getElementById('productName').value = '';
+                document.getElementById('productDescription').value = '';
+                document.getElementById('productCost').value = '';
+        
+                // Clear the file input and reset the upload area
+                document.getElementById('resetButton').addEventListener('click', function() {
+                    document.getElementById('inputFile').value = '';
+                    document.getElementById('image-view').innerHTML = '<img src="upload_icon.png" alt="Upload icon"><p>Drag and drop or click here to upload a video</p>';
+                    document.getElementById('result').innerHTML = '';
+                });
+            };
+        </script>
+
+        <footer class="footer">
+            <a href="index.html" class="footer-logo">
+                <img src="AssociatedStocktakingLogo2.png" alt="Associated Stocktaking Logo 2">
+            </a>
+            <!-- Footer of scan item page which includes the logo, navigation bar, and copyright -->
+            <nav class="footer-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="scan-item.html">Scan Item</a></li>
+                    <li><a href="count-products.html">Count Products</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="terms-of-use.html">Terms of Use</a></li>
+                </ul>
+            </nav>
+            <p class="copyright">&copy; 2024 Associated Stocktaking Services. All Rights Reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

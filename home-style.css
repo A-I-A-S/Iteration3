@@ -1,0 +1,317 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+}
+
+html, body {
+    height: 100%; /* Make sure the body takes the full viewport height */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-image: linear-gradient(#ffffffff, #114678);
+    background-position: center;
+    background-attachment: fixed;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+/* Header */
+.header {
+    width: 100%;
+    padding: 10px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+}
+
+.logo {
+    max-width: 100%;
+    padding: 10px;
+}
+
+.navbar {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.navbar a {
+    position: relative;
+    font-size: 18px;
+    color: #114678;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 30px;
+}
+
+.navbar a::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #114678;
+    transition: 0.5s;
+}
+
+.navbar a:hover:before {
+    width: 100%;
+}
+
+/* Media query for mobile devices */
+@media only screen and (max-width: 800px) {
+    .header {
+        flex-direction: column; /* Stack the nav items vertically */
+        align-items: center; /* Center the items horizontally */
+    }
+
+    .navbar {
+        flex-direction: column; /* Stack the nav items vertically */
+        align-items: center; /* Center the items horizontally */
+        margin-top: 10px; /* Add some spacing between the logo and the nav */
+    }
+
+    .navbar a {
+        margin-left: 0;
+    }
+}
+
+/* Introduction and Features */
+#introduction {
+    text-align: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto; /* Center the element and allow spacing */
+    position: relative;
+}
+/* Features container containing info and link on the features of scan and count pages*/
+.feature {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+/* Left and Right Columns  of the features*/
+.left, .right {
+    flex: 1;
+    padding: 10px;
+    min-width: 200px; /* Ensure some minimum width for smaller screens */
+}
+.left h2 {
+    margin-bottom: 10px; /* Add a gap between h2 and p */
+}
+.right h2 {
+    margin-bottom: 10px; /* Add a gap between h2 and p */
+}
+/* Left Column button for alignment with other button*/
+.left button {
+    padding: 10px 20px;
+    background-color: #114678;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 46px; /* Adjust the margin-top value to align the button */
+}
+/* Right Column button for alignment*/
+.right button {
+    padding: 10px 20px;
+    background-color: #114678;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px; /* Reset the margin-top value for the right button */
+}
+/* Buttons */
+button {
+    padding: 10px 20px;
+    background-color: #114678;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
+.footer {
+    width: 100%;
+    padding: 10px 5%;
+    background: transparent; /* Make the footer transparent so it behaves like a transparent background */
+    display: flex; /*makes the footer have a flexible display*/
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto; /* Push the footer to the bottom of the page */
+}
+
+.footer-logo {
+    max-width: 100%;
+}
+
+.footer-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.footer-nav ul {
+    list-style-type: none;
+    flex-direction: column;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-nav li {
+    margin-right: 20px;
+}
+
+.footer-nav a {
+    position: relative;
+    font-size: 18px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footer-nav a::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #ffffff;
+    transition: 0.5s;
+}
+
+.footer-nav a:hover::before {
+    width: 100%;
+}
+
+.copyright {
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Media queries for smaller screens, used some resources on flexible design https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design to learn how to use media queries */
+@media only screen and (max-width: 800px) {
+    .footer {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-logo {
+        margin-bottom: 10px;
+    }
+
+    .footer-nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-nav li {
+        margin-bottom: 10px;
+    }
+}
+
+/* Overlay and Popup */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+/* Popup design and styling with fixed position and infront of home page content and the overflow so it can be scrolled on smaller screens */
+.popup-content {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 1001;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 50px;
+    padding: 10px;
+}
+
+.popup-text {
+    margin-bottom: 30px;
+    text-align: center;
+}
+.popup-text ul {
+    list-style-type: none; /* Remove bullet points */
+    margin: 10px; /* space between list items */
+}
+
+.popup-text li {
+    margin-bottom: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+}
+
+/* Media queries for smaller screens, used some resources on flexible design https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design to learn how to use media queries */
+@media (max-width: 600px) {
+    .popup-content {
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .popup-text {
+        font-size: 14px;
+    }
+
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .button-container button {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
