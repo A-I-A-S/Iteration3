@@ -22,22 +22,43 @@ function authenticateUser() {
         });
     });
 }
-// Function for checking if CSV file exists in S3 bucket with results/product info
-async function checkForCSV(binLocation) {
+// Helper function to introduce a delay
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Function for checking if CSV file and image exist in S3 bucket with results/product info
+async function checkForCSVAndImage(binLocation) {
     const s3 = new AWS.S3();
     const csvFileName = `${binLocation}.csv`;
-    const params = {
+    const imageFileName = `${binLocation}.jpg`; // Assuming the image is a jpg, adjust if needed.
+
+    const csvParams = {
         Bucket: 'countresults',
         Key: csvFileName
     };
+    const imageParams = {
+        Bucket: 'countresults',
+        Key: imageFileName
+    };
 
     try {
-        await s3.headObject(params).promise();
-        const csvUrl = s3.getSignedUrl('getObject', params);
-        
-        // Check if the message is already displayed
+        // Check if CSV file exists
+        await s3.headObject(csvParams).promise();
+        const csvUrl = s3.getSignedUrl('getObject', csvParams);
+
+        // Check if Image file exists
+        await s3.headObject(imageParams).promise();
+        const imageUrl = s3.getSignedUrl('getObject', imageParams);
+
+        // Display CSV and image download links if they exist
         if (!document.getElementById('csvMessage')) {
-            document.getElementById('result').innerHTML += `<p id="csvMessage">CSV file is ready: <a href="${csvUrl}" download>Download CSV</a></p>`;
+            document.getElementById('result').innerHTML += `
+                <p id="csvMessage">CSV file is ready: <a href="${csvUrl}" download>Download CSV</a></p>`;
+        }
+        if (!document.getElementById('imageMessage')) {
+            document.getElementById('result').innerHTML += `
+                <p id="imageMessage">Image file is ready: <a href="${imageUrl}" download>Download Image</a></p>`;
         }
         
         document.getElementById('loader').style.display = 'none'; // Hide loader
@@ -46,40 +67,43 @@ async function checkForCSV(binLocation) {
         if (error.code === 'NotFound' || error.statusCode === 403) {
             return false; // Indicate failure
         } else {
-            console.error('Error checking for CSV:', error);
+            console.error('Error checking for CSV and image:', error);
             document.getElementById('loader').style.display = 'none'; // Hide loader on error
             return false; // Indicate failure
         }
     }
 }
 
-
-// Start polling for the CSV file
+// Start polling for the CSV and image files after a delay
 async function startChecking(binLocation) {
-    document.getElementById('loader').style.display = 'none'; // Show loader
+    // Show loader
+    document.getElementById('loader').style.display = 'block';
+    
+    // Wait for 20 seconds before starting to check
+    await delay(20000);
+    
     let fileFound = false;
     while (!fileFound) {
-        fileFound = await checkForCSV(binLocation);
+        fileFound = await checkForCSVAndImage(binLocation);
         if (!fileFound) {
-            await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds before retrying
+            await delay(5000); // Wait for 5 seconds before retrying
         }
     }
 }
 
-
-// Function to upload data, with authentication, and error handling to format and creation of xml and video files that are sent to s3
+// Function to upload data, authenticate with AWS, and start polling for CSV and image files
 async function uploadData() {
     try {
         await authenticateUser();
- 
+
         const binLocation = document.getElementById('binLocation').value;
         const imageFile = document.getElementById('inputFile').files[0];
- 
+
         if (!binLocation || !imageFile) {
-            alert('Please fill all fields and select a video file.');
+            alert('Please fill all fields and select an image or video file.');
             return;
         }
- 
+
         // Create XML data
         const xmlData = `
             <Location>
@@ -88,7 +112,7 @@ async function uploadData() {
         `;
         const xmlBlob = new Blob([xmlData], { type: 'application/xml' });
         const xmlFileName = `${binLocation}.xml`;
- 
+
         // Upload XML file to S3 bucket (aiascount)
         const s3 = new AWS.S3();
         const xmlParams = {
@@ -99,8 +123,8 @@ async function uploadData() {
         };
         await s3.upload(xmlParams).promise();
         console.log('Successfully uploaded XML');
- 
-        // Upload video file to S3 bucket (aiascount)
+
+        // Upload image or video file to S3 bucket (aiascount)
         const imageFileName = `${binLocation}.${imageFile.name.split('.').pop()}`;
         const imageParams = {
             Bucket: 'aiascount',
@@ -108,13 +132,13 @@ async function uploadData() {
             Body: imageFile,
             ContentType: imageFile.type
         };
- 
-        // Shows the result of the upload of information so when successful, a success alert is shown and if an error occurs it will show it. Had GPT help with capturing and udnerstanding the errors and ensuring that correct roles/authentication of AWS systems were used ie. Cognito, identiy pool, roles. 
-        const imageUploadResult = await s3.upload(imageParams).promise();
-        console.log('Successfully uploaded video', imageUploadResult);
-        document.getElementById('result').innerHTML = `<p>Successfully uploaded form! Please wait for results! </p>`;
 
-        // Start polling for the CSV file
+        const imageUploadResult = await s3.upload(imageParams).promise();
+        console.log('Successfully uploaded image/video', imageUploadResult);
+
+        document.getElementById('result').innerHTML = `<p>Successfully uploaded form! Please wait for results!</p>`;
+
+        // Start polling for the CSV and image file after a 20-second delay
         startChecking(binLocation);
     } catch (error) {
         console.error('Error in uploadData:', error);
@@ -124,6 +148,7 @@ async function uploadData() {
         document.getElementById('loader').style.display = 'none';
     }
 }
+
  
 // Drag and Drop for uploading image/video. learnt and adapted from https://www.youtube.com/watch?v=5Fws9daTtIs
 const dropArea = document.getElementById("drop-area");
